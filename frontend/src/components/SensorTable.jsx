@@ -25,15 +25,19 @@ export default function SensorTable() {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(sensors).map(([id, val]) => (
-            <tr key={id}>
-              <td>{id}</td>
-              <td>{val.value}</td>
-              <td>{val.lat}</td>
-              <td>{val.lng}</td>
-            </tr>
-          ))}
-        </tbody>
+           {Object.values(sensors).map((s) => (
+             <tr key={s.id}>
+               <td>{s.id}</td>
+               <td>{s.field}</td>
+               <td>{s.temperature} °C</td>
+               <td>{s.pressure} psi</td>
+               <td style={{ color: s.status === "warning" ? "orange" : "green" }}>
+                 {s.status}
+              </td>
+             </tr>
+           ))}
+          </tbody>
+
       </table>
     </div>
   );

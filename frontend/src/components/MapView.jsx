@@ -21,14 +21,17 @@ export default function MapView() {
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {Object.keys(sensors).map((id) => (
-        <Marker key={id} position={[sensors[id].lat, sensors[id].lng]}>
+      {Object.values(sensors).map((s) => (
+        <Marker key={s.id} position={[s.lat, s.lng]}>
           <Popup>
-            <b>ID:</b> {id}<br/>
-            <b>Value:</b> {sensors[id].value}
+           <b>{s.field}</b><br/>
+           Temp: {s.temperature} °C<br/>
+           Pressure: {s.pressure} psi<br/>
+           Status: {s.status}
           </Popup>
         </Marker>
       ))}
+
     </MapContainer>
   );
 }
