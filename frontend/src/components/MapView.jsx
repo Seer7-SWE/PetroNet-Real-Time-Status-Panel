@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { database } from "../firebaseConfig";
+import {db } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
 
 
@@ -8,11 +8,14 @@ export default function MapView() {
   const [sensors, setSensors] = useState({});
 
   useEffect(() => {
-    const sensorRef = ref(database, "sensors/");
+    const sensorRef = ref(db, "sensors/");
     onValue(sensorRef, (snapshot) => {
       setSensors(snapshot.val() || {});
     });
   }, []);
+
+  if (!sensors) return null;
+
 
   return (
     <MapContainer

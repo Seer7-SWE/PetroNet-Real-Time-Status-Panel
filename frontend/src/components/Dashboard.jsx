@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
-import { database } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 
 import MapView from "./MapView";
 import SensorTable from "./SensorTable";
@@ -13,20 +13,36 @@ export default function Dashboard() {
 
   useEffect(() => {
     //  Sensors listener
-    const sensorsRef = ref(database, "sensors");
-    onValue(sensorsRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log("FIREBASE SENSOR DATA:", data);
-      setSensors(data || {});
-    });
+    const sensorsRef = ref(db, "sensors");
+       onValue(sensorsRef, (snapshot) => {
+         const raw = snapshot.val() || {};
+
+         const cleaned = Object.fromEntries(
+           Object.entries(raw).filter(
+             ([_, value]) => typeof value === "object"
+           )
+         );
+
+         console.log("🔥 FIREBASE SENSOR DATA:", cleaned);
+         setSensors(cleaned);
+       });
+
 
     //  Alerts listener
-    const alertsRef = ref(database, "alerts");
+    const alertsRef = ref(db, "alerts");
     onValue(alertsRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log("FIREBASE ALERT DATA:", data);
-      setAlerts(data || {});
+      const raw = snapshot.val() || {};
+
+      const cleaned = Object.fromEntries(
+        Object.entries(raw).filter(
+         ([_, value]) => typeof value === "object"
+        )
+      );
+
+     console.log(" FIREBASE ALERT DATA:", cleaned);
+     setAlerts(cleaned);
     });
+
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { database } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
 
 
@@ -7,11 +7,15 @@ export default function SensorTable() {
   const [sensors, setSensors] = useState({});
 
   useEffect(() => {
-    const sensorRef = ref(database, "sensors/");
+    const sensorRef = ref(db, "sensors/");
     onValue(sensorRef, (snapshot) => {
       setSensors(snapshot.val() || {});
     });
   }, []);
+
+  if (!sensors || Object.keys(sensors).length === 0) {
+    return <p className="text-gray-400">No sensor data available</p>;
+  }
 
   return (
     <div>

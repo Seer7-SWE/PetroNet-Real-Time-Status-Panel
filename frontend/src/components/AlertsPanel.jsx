@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { database } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
 
 
@@ -7,7 +7,7 @@ export default function AlertsPanel() {
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-    const alertsRef = ref(database, "alerts/");
+    const alertsRef = ref(db, "alerts/");
     onValue(alertsRef, (snapshot) => {
       setAlerts(snapshot.val() || {});
     });
