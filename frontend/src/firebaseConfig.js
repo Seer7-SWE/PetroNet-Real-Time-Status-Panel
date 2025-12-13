@@ -8,8 +8,9 @@ const firebaseConfig = {
   storageBucket: "petronet-real-time-statuspanel.firebasestorage.app",
   messagingSenderId: "618378360496",
   appId: "1:618378360496:web:3ddc08264b6a26a6d22d75",
-  measurementId: "G-TYK2NN57MP"
+  measurementId: "G-TYK2NN57MP",
+  databaseURL: "https://petronet-real-time-statuspanel-default-rtdb.firebaseio.com"
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
+export const database= getDatabase(app);

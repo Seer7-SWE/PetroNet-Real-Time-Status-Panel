@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { database } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
-import { db } from "../firebase";
+
 
 export default function SensorTable() {
   const [sensors, setSensors] = useState({});
