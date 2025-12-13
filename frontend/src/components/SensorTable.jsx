@@ -7,7 +7,7 @@ export default function SensorTable() {
   const [sensors, setSensors] = useState({});
 
   useEffect(() => {
-    const sensorRef = ref(db, "sensors/");
+    const sensorRef = ref(database, "sensors/");
     onValue(sensorRef, (snapshot) => {
       setSensors(snapshot.val() || {});
     });

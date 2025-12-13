@@ -7,7 +7,7 @@ export default function AlertsPanel() {
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-    const alertsRef = ref(db, "alerts/");
+    const alertsRef = ref(database, "alerts/");
     onValue(alertsRef, (snapshot) => {
       setAlerts(snapshot.val() || {});
     });
