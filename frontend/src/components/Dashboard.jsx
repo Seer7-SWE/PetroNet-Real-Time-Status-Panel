@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
-import { db } from "../firebaseConfig";
+import { database } from "../firebaseConfig";
 
 import MapView from "./MapView";
 import SensorTable from "./SensorTable";
@@ -12,19 +12,19 @@ export default function Dashboard() {
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-    // 🔥 Sensors listener
-    const sensorsRef = ref(db, "sensors");
+    //  Sensors listener
+    const sensorsRef = ref(database, "sensors");
     onValue(sensorsRef, (snapshot) => {
       const data = snapshot.val();
-      console.log("🔥 FIREBASE SENSOR DATA:", data);
+      console.log("FIREBASE SENSOR DATA:", data);
       setSensors(data || {});
     });
 
-    // 🚨 Alerts listener
-    const alertsRef = ref(db, "alerts");
+    //  Alerts listener
+    const alertsRef = ref(database, "alerts");
     onValue(alertsRef, (snapshot) => {
       const data = snapshot.val();
-      console.log("🚨 FIREBASE ALERT DATA:", data);
+      console.log("FIREBASE ALERT DATA:", data);
       setAlerts(data || {});
     });
   }, []);
