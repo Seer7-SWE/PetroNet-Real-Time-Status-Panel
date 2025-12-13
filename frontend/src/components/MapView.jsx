@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import {db } from "../firebaseConfig";
-import { ref, onValue } from "firebase/database";
 
-
-export default function MapView() {
-  const [sensors, setSensors] = useState({});
-
-  useEffect(() => {
-    const sensorRef = ref(db, "sensors/");
-    onValue(sensorRef, (snapshot) => {
-      setSensors(snapshot.val() || {});
-    });
-  }, []);
-
-  if (!sensors) return null;
-
-
+export default function MapView({ sensors }) {
   return (
-    <MapContainer
-      center={[23.8859, 45.0792]} // Saudi Arabia center
-      zoom={6}
-      style={{ height: "400px", width: "100%" }}
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <div className="h-[500px] w-full rounded-lg overflow-hidden border">
+      <MapContainer
+        center={[24.7136, 46.6753]} // Saudi Arabia
+        zoom={6}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      {Object.values(sensors).map((s) => (
-        <Marker key={s.id} position={[s.lat, s.lng]}>
-          <Popup>
-           <b>{s.field}</b><br/>
-           Temp: {s.temperature} °C<br/>
-           Pressure: {s.pressure} psi<br/>
-           Status: {s.status}
-          </Popup>
-        </Marker>
-      ))}
-
-    </MapContainer>
+        {sensors &&
+          Object.values(sensors).map((s) => (
+            <Marker key={s.id} position={[s.lat, s.lng]}>
+              <Popup>
+                <strong>{s.field}</strong><br />
+                Temp: {s.temperature}°C<br />
+                Pressure: {s.pressure}
+              </Popup>
+            </Marker>
+          ))}
+      </MapContainer>
+    </div>
   );
 }

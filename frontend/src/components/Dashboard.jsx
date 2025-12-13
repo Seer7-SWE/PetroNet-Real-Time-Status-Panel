@@ -12,42 +12,31 @@ export default function Dashboard() {
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-    //  Sensors listener
     const sensorsRef = ref(db, "sensors");
-       onValue(sensorsRef, (snapshot) => {
-         const raw = snapshot.val() || {};
-
-         const cleaned = Object.fromEntries(
-           Object.entries(raw).filter(
-             ([_, value]) => typeof value === "object"
-           )
-         );
-
-         console.log("🔥 FIREBASE SENSOR DATA:", cleaned);
-         setSensors(cleaned);
-       });
-
-
-    //  Alerts listener
     const alertsRef = ref(db, "alerts");
-    onValue(alertsRef, (snapshot) => {
+
+    onValue(sensorsRef, (snapshot) => {
       const raw = snapshot.val() || {};
-
       const cleaned = Object.fromEntries(
-        Object.entries(raw).filter(
-         ([_, value]) => typeof value === "object"
-        )
+        Object.entries(raw).filter(([, v]) => typeof v === "object")
       );
-
-     console.log(" FIREBASE ALERT DATA:", cleaned);
-     setAlerts(cleaned);
+      console.log(" FIREBASE SENSOR DATA:", cleaned);
+      setSensors(cleaned);
     });
 
+    onValue(alertsRef, (snapshot) => {
+      const raw = snapshot.val() || {};
+      const cleaned = Object.fromEntries(
+        Object.entries(raw).filter(([, v]) => typeof v === "object")
+      );
+      console.log(" FIREBASE ALERT DATA:", cleaned);
+      setAlerts(cleaned);
+    });
   }, []);
 
   return (
     <div className="dashboard grid grid-cols-12 gap-4 p-4">
-      <div className="col-span-8">
+      <div className="col-span-8 h-[500px]">
         <MapView sensors={sensors} />
       </div>
 

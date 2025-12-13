@@ -7,17 +7,27 @@ const data = [
   { time: 3, value: 18 },
 ];
 
-export default function RechartsPanel() {
+export default function RechartsPanel({ sensors }) {
+  if (!sensors || Object.keys(sensors).length === 0) {
+    return <p className="text-gray-500">No chart data</p>;
+  }
+
+  const data = Object.values(sensors).map((s) => ({
+    name: s.field,
+    temperature: s.temperature,
+    pressure: s.pressure
+  }));
+
   return (
-    <div>
-      <h2>Trend</h2>
-      <LineChart width={500} height={300} data={data}>
-        <Line type="monotone" dataKey="value" stroke="#ff0000" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="time" />
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={data}>
+        <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
+        <Line type="monotone" dataKey="temperature" />
+        <Line type="monotone" dataKey="pressure" />
       </LineChart>
-    </div>
+    </ResponsiveContainer>
   );
 }
+
