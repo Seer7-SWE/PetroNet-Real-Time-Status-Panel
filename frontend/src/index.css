@@ -1,13 +1,38 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f7fa;
-  padding: 0;
-  margin: 0;
+.scada-root {
+  height: 100vh;
+  background: #0b0f14;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboard {
+.scada-topbar {
+  height: 60px;
+  background: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid #1f2933;
+}
+
+.scada-grid {
+  flex: 1;
   display: grid;
-  padding: 20px;
-  gap: 20px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  gap: 12px;
+  padding: 12px;
+}
+
+.panel {
+  background: #020617;
+  border: 1px solid #1f2933;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.panel.map {
+  grid-row: span 2;
 }

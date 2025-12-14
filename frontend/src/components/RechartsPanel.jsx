@@ -1,34 +1,27 @@
-import React from "react";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-
-const data = [
-  { time: 1, value: 10 },
-  { time: 2, value: 22 },
-  { time: 3, value: 18 },
-];
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function RechartsPanel({ sensors }) {
-  if (!sensors || Object.keys(sensors).length === 0) {
-    return <p className="text-gray-500">No chart data</p>;
-  }
+  if (!sensors) return null;
 
-  const data = Object.values(sensors).map((s) => ({
+  const chartData = Object.values(sensors).map((s) => ({
     name: s.field,
     temperature: s.temperature,
-    pressure: s.pressure
+    pressure: s.pressure,
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="temperature" />
-        <Line type="monotone" dataKey="pressure" />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className="card">
+      <h2>Temperature vs Pressure</h2>
+
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={chartData}>
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Line type="monotone" dataKey="temperature" stroke="#ff7300" />
+          <Line type="monotone" dataKey="pressure" stroke="#387908" />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
-
-
