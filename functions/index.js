@@ -1,9 +1,12 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-admin.initializeApp();
 
+admin.initializeApp();
 const db = admin.database();
 
+/**
+ * EXACT SAUDI OIL FIELDS (50)
+ */
 const OIL_FIELDS = [
   { id: "ghawar-001", field: "Ghawar", lat: 25.43, lng: 49.62 },
   { id: "ain-dar-002", field: "Ain Dar", lat: 25.60, lng: 49.55 },
@@ -69,53 +72,69 @@ const OIL_FIELDS = [
 
   { id: "jalameed-049", field: "Jalameed", lat: 31.50, lng: 39.30 },
   { id: "thar-050", field: "Thar", lat: 20.20, lng: 50.90 },
-
-  // padding to reach 100 with additional satellite fields
-  ...Array.from({ length: 50 }, (_, i) => ({
-    id: `satellite-${String(i + 51).padStart(3, "0")}`,
-    field: `Satellite Field ${i + 51}`,
-    lat: 24 + (i % 10) * 0.3,
-    lng: 47 + (i % 10) * 0.4,
-  })),
 ];
 
+/**
+ * Generate realistic sensor state
+ */
+function generateSensorState(field) {
+  const temperature = Math.round(65 + Math.random() * 55); // 65–120°C
+  const pressure = Math.round(180 + Math.random() * 220);  // 180–400 bar
+  const value = Math.round(Math.random() * 100);
 
-function random(min, max) {
-  return Math.round(min + Math.random() * (max - min));
+  let status = "normal";
+  if (temperature > 100 || pressure > 330) status = "high";
+  if (temperature > 112 || pressure > 370) status = "critical";
+
+  return {
+    ...field,
+    temperature,
+    pressure,
+    value,
+    status,
+    timestamp: Date.now(),
+  };
 }
 
-exports.simulateOilFields = functions.pubsub
-  .schedule("every 1 minutes")
+/**
+ * Generate alert if abnormal
+ */
+function generateAlert(sensor) {
+  if (sensor.status === "normal") return null;
+
+  return {
+    sensorId: sensor.id,
+    field: sensor.field,
+    severity: sensor.status.toUpperCase(),
+    message:
+      sensor.status === "critical"
+        ? `CRITICAL condition at ${sensor.field}`
+        : `High threshold breach at ${sensor.field}`,
+    timestamp: Date.now(),
+  };
+}
+
+/**
+ * SIMULATION ENGINE — runs every 30 seconds
+ */
+exports.simulationEngine = functions.pubsub
+  .schedule("every 30 seconds")
   .onRun(async () => {
+    const sensorsRef = db.ref("sensors");
+    const alertsRef = db.ref("alerts");
+
+    await alertsRef.remove(); // clear previous cycle alerts
+
     for (const field of OIL_FIELDS) {
-      const temperature = random(60, 140);
-      const pressure = random(150, 350);
+      const sensor = generateSensorState(field);
+      await sensorsRef.child(sensor.id).set(sensor);
 
-      let status = "NORMAL";
-      if (temperature > 120) status = "CRITICAL";
-      else if (pressure > 300) status = "HIGH";
-
-      const payload = {
-        ...field,
-        temperature,
-        pressure,
-        value: random(40, 90),
-        status,
-        timestamp: Date.now()
-      };
-
-      await db.ref(`sensors/${field.id}`).set(payload);
-
-      if (status !== "NORMAL") {
-        await db.ref(`alerts/${field.id}`).set({
-          sensorId: field.id,
-          field: field.field,
-          severity: status,
-          message: `${field.field} anomaly detected`,
-          timestamp: Date.now()
-        });
+      const alert = generateAlert(sensor);
+      if (alert) {
+        await alertsRef.push(alert);
       }
     }
 
+    console.log("Saudi oilfield simulation tick completed");
     return null;
   });
