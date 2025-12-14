@@ -5,7 +5,7 @@ import { database } from "../firebaseConfig";
 import MapView from "./MapView";
 import SensorTable from "./SensorTable";
 import AlertsPanel from "./AlertsPanel";
-import RechartsPanel from "./Rechartspanel";
+import RechartsPanel from "./RechartsPanel";
 
 export default function Dashboard() {
   const [sensors, setSensors] = useState({});
