@@ -1,26 +1,5 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
-  "functions": [
-    {
-      "codebase": "default",
-      "source": "functions"
-    },
-    {
-      "source": "petronetcodebase",
-      "codebase": "petronetcodebase",
-      "disallowLegacyRuntimeConfig": true,
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint"
-      ]
-    }
-  ]
+  "functions": {
+    "source": "functions"
+  }
 }
