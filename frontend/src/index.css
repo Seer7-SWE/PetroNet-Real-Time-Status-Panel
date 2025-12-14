@@ -75,11 +75,21 @@ body {
 .alert.critical {
   color: #ff4d4d;
   animation: blink 1s infinite;
+  font-weight: bold;
 }
 
 @keyframes blink {
   50% { opacity: 0.4; }
 }
+
+.system-health .critical {
+  color: #ff4d4d;
+}
+
+.system-health .normal {
+  color: #2ecc71;
+}
+
 
 .status .critical { color: #ff4d4d; }
 .status .normal { color: #2ecc71; }
