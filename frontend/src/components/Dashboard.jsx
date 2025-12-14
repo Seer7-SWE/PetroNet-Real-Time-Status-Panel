@@ -102,17 +102,23 @@ export default function Dashboard() {
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-    const sensorsRef = ref(database, "sensors");
-    const alertsRef = ref(database, "alerts");
+  const sensorsRef = ref(database, "sensors");
+  const alertsRef = ref(database, "alerts");
 
-    onValue(ref(database, "sensors"), (snap) => {
-      setSensors(snap.val() || {});
-    });
+  const unsubSensors = onValue(sensorsRef, snap => {
+    setSensors(snap.val() || {});
+  });
 
-    onValue(ref(database, "alerts"), (snap) => {
-      setAlerts(snap.val() || {});
-    });
+  const unsubAlerts = onValue(alertsRef, snap => {
+    setAlerts(snap.val() || {});
+  });
+
+    return () => {
+      unsubSensors();
+      unsubAlerts();
+    };
   }, []);
+
 
   return (
     <div className="scada-root">
@@ -120,6 +126,11 @@ export default function Dashboard() {
       <div className="scada-topbar">
         <h2>PetroNet — Saudi Oilfield Operations</h2>
         <span>Live Monitoring</span>
+        <div className="status">
+            <span className={Object.keys(alerts).length > 0 ? "critical" : "normal"}>
+                   ● SYSTEM {Object.keys(alerts).length > 0 ? "DEGRADED" : "NORMAL"}
+            </span>
+        </div>
       </div>
 
       {/* MAIN GRID */}
@@ -135,12 +146,11 @@ export default function Dashboard() {
         <div className="panel table">
           <SensorTable sensors={sensors} />
         </div>
-      </div>
 
-         <div className="dashboard-grid">
+        <div className="panel charts">
             <RechartsPanel sensors={sensors} />
-         </div>
-
+        </div>
+      </div>
     </div>
   );
 }

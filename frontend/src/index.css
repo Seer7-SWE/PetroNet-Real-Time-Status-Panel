@@ -20,7 +20,7 @@
   flex: 1;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 2fr 1fr 1fr;
   gap: 12px;
   padding: 12px;
 }
@@ -43,12 +43,12 @@ body {
   color: #e0e0e0;
 }
 
-.card {
+/* .card {
   background: #12172a;
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 16px;
-}
+} */
 
 .dashboard-grid {
   display: grid;
@@ -72,6 +72,17 @@ body {
 .badge.high { color: #f1c40f; }
 .badge.critical { color: #e74c3c; }
 
-.alert.critical { color: #ff4d4d; }
+.alert.critical {
+  color: #ff4d4d;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}
+
+.status .critical { color: #ff4d4d; }
+.status .normal { color: #2ecc71; }
+
 .alert.high { color: #ffa500; }
 
