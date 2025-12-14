@@ -1,13 +1,4 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-
-admin.initializeApp();
-const db = admin.database();
-
-/**
- * EXACT SAUDI OIL FIELDS (50)
- */
-const OIL_FIELDS = [
+export const OIL_FIELDS = [
   { id: "ghawar-001", field: "Ghawar", lat: 25.43, lng: 49.62 },
   { id: "ain-dar-002", field: "Ain Dar", lat: 25.60, lng: 49.55 },
   { id: "shedgum-003", field: "Shedgum", lat: 25.70, lng: 49.65 },
@@ -73,68 +64,3 @@ const OIL_FIELDS = [
   { id: "jalameed-049", field: "Jalameed", lat: 31.50, lng: 39.30 },
   { id: "thar-050", field: "Thar", lat: 20.20, lng: 50.90 },
 ];
-
-/**
- * Generate realistic sensor state
- */
-function generateSensorState(field) {
-  const temperature = Math.round(65 + Math.random() * 55); // 65–120°C
-  const pressure = Math.round(180 + Math.random() * 220);  // 180–400 bar
-  const value = Math.round(Math.random() * 100);
-
-  let status = "normal";
-  if (temperature > 100 || pressure > 330) status = "high";
-  if (temperature > 112 || pressure > 370) status = "critical";
-
-  return {
-    ...field,
-    temperature,
-    pressure,
-    value,
-    status,
-    timestamp: Date.now(),
-  };
-}
-
-/**
- * Generate alert if abnormal
- */
-function generateAlert(sensor) {
-  if (sensor.status === "normal") return null;
-
-  return {
-    sensorId: sensor.id,
-    field: sensor.field,
-    severity: sensor.status.toUpperCase(),
-    message:
-      sensor.status === "critical"
-        ? `CRITICAL condition at ${sensor.field}`
-        : `High threshold breach at ${sensor.field}`,
-    timestamp: Date.now(),
-  };
-}
-
-/**
- * SIMULATION ENGINE — runs every 30 seconds
- */
-exports.simulationEngine = functions.pubsub
-  .schedule("every 30 seconds")
-  .onRun(async () => {
-    const sensorsRef = db.ref("sensors");
-    const alertsRef = db.ref("alerts");
-
-    await alertsRef.remove(); // clear previous cycle alerts
-
-    for (const field of OIL_FIELDS) {
-      const sensor = generateSensorState(field);
-      await sensorsRef.child(sensor.id).set(sensor);
-
-      const alert = generateAlert(sensor);
-      if (alert) {
-        await alertsRef.push(alert);
-      }
-    }
-
-    console.log("Saudi oilfield simulation tick completed");
-    return null;
-  });

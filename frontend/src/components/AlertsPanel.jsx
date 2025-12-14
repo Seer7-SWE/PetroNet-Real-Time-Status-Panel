@@ -16,6 +16,16 @@ export default function AlertsPanel({ alerts }) {
             </small>
           </li>
         ))}
+
+        {Object.values(alerts).map(alert => (
+             <div
+             key={alert.id}
+             className={`alert ${alert.severity.toLowerCase()}`}
+             >
+            {alert.message}
+            </div>
+         ))}
+
       </ul>
     </div>
   );
