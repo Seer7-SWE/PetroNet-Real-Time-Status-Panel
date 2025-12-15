@@ -6,6 +6,7 @@ import MapView from "./MapView";
 import SensorTable from "./SensorTable";
 import AlertsPanel from "./AlertsPanel";
 import RechartsPanel from "./RechartsPanel";
+import KPIHealth from "./KPIHealth";
 
 export default function Dashboard() {
   const [sensors, setSensors] = useState({});
@@ -45,21 +46,28 @@ export default function Dashboard() {
 
       {/* MAIN GRID */}
       <div className="scada-grid">
-        <div className="panel map">
-          <MapView sensors={sensors} />
-        </div>
+         <div className="panel map">
+           <MapView sensors={sensors} />
+         </div>
 
         <div className="panel alerts">
           <AlertsPanel alerts={alerts} />
         </div>
 
-        <div className="panel table">
-          <SensorTable sensors={sensors} />
+        <div className="KPIHealth">
+            <KPIHealth sensors={sensors}/>
         </div>
-        <div className="panel charts">
+        <div className="panel table">
+            <div className="panel-content">
+               <SensorTable sensors={sensors} />
+              <div/>
+        </div>
+        
+      </div>
+        <div className="panel charts">           
             <RechartsPanel sensors={sensors} />
         </div>
-      </div>
     </div>
+   </div>
   );
 }

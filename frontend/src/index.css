@@ -1,5 +1,5 @@
 .scada-root {
-  height: 100vh;
+  min-height: 100vh;
   background: #0b0f14;
   color: #e5e7eb;
   display: flex;
@@ -20,9 +20,9 @@
   flex: 1;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: minmax(0, 2fr) minmax(0, 1fr);
   gap: 12px;
-  padding: 12px;
+  padding: 14px;
   
 }
 
@@ -32,7 +32,7 @@
   border: 1px solid #1f2933;
   border-radius: 8px;
   padding: 10px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .panel.map {
@@ -41,6 +41,15 @@
   min-height: 520px;
 }
 
+.panel.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel.table .panel-content {
+  flex: 1;
+  overflow-y:auto;
+}
 
 body {
   background: #0b0f1a;
@@ -135,5 +144,50 @@ body {
   
 }
 
+.panel-charts{
+  border-right: #020617;
+  flex: content;
+  flex-grow: inherit;
+}
+
+.panel.kpi {
+  text-align: center;
+}
+
+.kpi-box {
+  padding: 12px;
+}
+
+.kpi-title {
+  font-size: 14px;
+  margin-bottom: 6px;
+  align-content:center;
+  
+}
+
+.kpi-bar {
+  /* width: 100%; */
+  height: 10px;
+   background: #1f2933;  /* #020617 */
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 8px 0;
+  border: 1px solid #1f2933;
+  gap: 20px;
+  
+}
+
+.kpi-fill {
+  height: 100%;
+  transition: width 0.6s ease;
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 6px;
+  opacity: 1.0;
+  margin-top: 10px;
+}
 
 

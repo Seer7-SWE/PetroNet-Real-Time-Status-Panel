@@ -96,10 +96,10 @@ export default function MapView({ sensors }) {
                 renderer={canvasRenderer}
               >
                 <Popup>
-                  <strong>{s.field}</strong><br />
-                  Temp: {s.temperature}°C<br />
-                  Pressure: {s.pressure}<br />
-                  Status: {status}
+                   <strong>{s.field}</strong><br />
+                   Temp: {s.temperature}°C<br />
+                   Pressure: {s.pressure}<br />
+                   Status: {status}
                 </Popup>
               </CircleMarker>
             </Fragment>
