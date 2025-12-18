@@ -5,8 +5,17 @@ import { useEffect, useState } from "react";
 
 
 export default function AlertsPanel({ alerts }) {
+  const [ now, setNow ] = useState(Date.now());
+    useEffect(() => {
+      const interval = setInterval(() => {
+      setNow(Date.now());
+      }, 60000); // update every 1 minute
+      return () => clearInterval(interval);
+       }, []);
+  
   const list = Object.entries(alerts || {});
    
+
   const acknowledgeAlert = (id) => {
     update(ref(database, `alerts/${id}`), {
       acknowledged: true
@@ -17,14 +26,14 @@ export default function AlertsPanel({ alerts }) {
     return <p style={{ opacity: 0.6 }}>No active alerts</p>;
   }
 
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const timer = setInterval(() => {
-    setNow(Date.now());
-  }, 60000); // update every 1 minute
+  // const [now, setNow] = useState(Date.now());
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //   setNow(Date.now());
+  // }, 60000); // update every 1 minute
 
-  return () => clearInterval(timer);
-  }, []);
+  // return () => clearInterval(timer);
+  // }, []);
 
 
   return (
@@ -53,9 +62,9 @@ export default function AlertsPanel({ alerts }) {
             <strong>{alert.severity}</strong>
                   <p style={{ margin: "4px 0" }}>{alert.message}</p>
 
-               <div style={{ fontSize: "12px", opacity: 0.7 }}>
+               <small style={{ fontSize: "12px", opacity: 0.7 }}>
                   Age: {getAlertAge(alert.timestamp, now)}
-               </div>
+               </small>
 
 
             {!alert.acknowledged && (

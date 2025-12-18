@@ -1,34 +1,34 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+// import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-export default function RechartsPanel({ sensors }) {
-  if (!sensors) return null;
+// export default function RechartsPanel({ sensors }) {
+//   if (!sensors) return null;
 
-  const chartData = Object.values(sensors).map((s) => ({
-    name: s.field,
-    temperature: s.temperature,
-    pressure: s.pressure,
-  }));
+//   const chartData = Object.values(sensors).map((s) => ({
+//     name: s.field,
+//     temperature: s.temperature,
+//     pressure: s.pressure,
+//   }));
 
-  return (
-    <div className="card">
-      <h2>Temperature vs Pressure</h2>
+//   return (
+//     <div className="card">
+//       <h2>Temperature vs Pressure</h2>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={chartData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip contentStyle={{
-              backgroundColor: "#020617",
-              border: "1px solid #1f2933",
-              color: "#e5e7eb",
-            }} />
-          <Line type="monotone" dataKey="temperature" stroke="#ff7300" />
-          <Line type="monotone" dataKey="pressure" stroke="#387908" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
+//       <ResponsiveContainer width="100%" height={300}>
+//         <LineChart data={chartData}>
+//           <XAxis dataKey="name" />
+//           <YAxis />
+//           <Tooltip contentStyle={{
+//               backgroundColor: "#020617",
+//               border: "1px solid #1f2933",
+//               color: "#e5e7eb",
+//             }} />
+//           <Line type="monotone" dataKey="temperature" stroke="#ff7300" />
+//           <Line type="monotone" dataKey="pressure" stroke="#387908" />
+//         </LineChart>
+//       </ResponsiveContainer>
+//     </div>
+//   );
+// }
 
 // import {
 //   LineChart,

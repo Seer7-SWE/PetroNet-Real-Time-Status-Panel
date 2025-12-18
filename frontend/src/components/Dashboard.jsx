@@ -5,8 +5,10 @@ import { database } from "../firebaseConfig";
 import MapView from "./MapView";
 import SensorTable from "./SensorTable";
 import AlertsPanel from "./AlertsPanel";
-import RechartsPanel from "./RechartsPanel";
+// import RechartsPanel from "./RechartsPanel";
 import KPIHealth from "./KPIHealth";
+import TempPressureScatter from "./TempPressureScatter";
+
 
 export default function Dashboard() {
   const [sensors, setSensors] = useState({});
@@ -64,10 +66,15 @@ export default function Dashboard() {
         </div>
         
       </div>
-        <div className="panel charts">           
+        {/* <div className="panel charts">           
             <RechartsPanel sensors={sensors} />
-        </div>
+        </div> */}
+        
+
     </div>
+       <div className="panel">
+          <TempPressureScatter sensors={sensors} />
+        </div>
    </div>
   );
 }

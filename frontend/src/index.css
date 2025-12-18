@@ -222,3 +222,34 @@ body {
   font-weight: 600;
   text-align: right;
 }
+
+.sensor-table th,
+.sensor-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #333;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sensor-table th.confidence-col,
+.sensor-table td.confidence-col {
+  width: 90px;
+  text-align: right;
+}
+
+.recharts-tooltip-wrapper {
+  font-size: 12px;
+}
+
+.recharts-legend-item text {
+  fill: #9ca3af !important;
+}
+
+.recharts-cartesian-axis-tick text {
+  fill: #9ca3af;
+}
+
+.scatter-wrapper {
+  height: 360px;     
+  width: 100%;
+}
