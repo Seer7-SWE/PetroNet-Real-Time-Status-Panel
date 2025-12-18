@@ -29,8 +29,11 @@ export default function SensorTable({ sensors }) {
           {Object.values(sensors).map((s) => {
             const confidence = calculateSensorConfidence(s);
 
-            const confidenceClass =
-              confidence >= 80 ? "confidence-high" : confidence >=50 ? "confidence-medium" : "confidence-loe";
+            let rowClass = "";
+            if (confidence <= 40) rowClass = "conf-low-bg";
+            else if (confidence <= 70) rowClass = "conf-med-bg";
+            else rowClass = "conf-high-bg";
+
             return (
             <tr key={s.id}>
               <td>{s.field}</td>
@@ -43,7 +46,7 @@ export default function SensorTable({ sensors }) {
                 </span>
               </td>
               <td>{new Date(s.timestamp).toLocaleTimeString()}</td>
-            <td className={confidenceClass}>{confidence}%</td>
+            <td className="confidence-text">{confidence}%</td>
             </tr>
             );
           })}

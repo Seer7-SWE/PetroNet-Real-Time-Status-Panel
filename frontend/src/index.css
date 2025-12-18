@@ -204,3 +204,21 @@ body {
   color: #ef4444;
   font-weight: 600;
 }
+
+/* Confidence row heat */
+.conf-low-bg {
+  background: rgba(239, 68, 68, 0.18); /* red shadow */
+}
+
+.conf-med-bg {
+  background: rgba(245, 158, 11, 0.14); /* amber */
+}
+
+.conf-high-bg {
+  background: rgba(34, 197, 94, 0.10); /* green fade */
+}
+
+.confidence-text {
+  font-weight: 600;
+  text-align: right;
+}
