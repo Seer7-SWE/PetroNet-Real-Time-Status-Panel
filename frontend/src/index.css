@@ -190,4 +190,17 @@ body {
   margin-top: 10px;
 }
 
+.confidence-high {
+  color: #22c55e;
+  font-weight: 600;
+}
 
+.confidence-medium {
+  color: #facc15;
+  font-weight: 600;
+}
+
+.confidence-low {
+  color: #ef4444;
+  font-weight: 600;
+}

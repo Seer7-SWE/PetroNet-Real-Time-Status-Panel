@@ -1,9 +1,12 @@
 import { ref, update } from "firebase/database";
 import { database } from "../firebaseConfig";
+import { getAlertAge } from "../utils/alertAge";
+import { useEffect, useState } from "react";
+
 
 export default function AlertsPanel({ alerts }) {
   const list = Object.entries(alerts || {});
-
+   
   const acknowledgeAlert = (id) => {
     update(ref(database, `alerts/${id}`), {
       acknowledged: true
@@ -13,6 +16,16 @@ export default function AlertsPanel({ alerts }) {
   if (list.length === 0) {
     return <p style={{ opacity: 0.6 }}>No active alerts</p>;
   }
+
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => {
+    setNow(Date.now());
+  }, 60000); // update every 1 minute
+
+  return () => clearInterval(timer);
+  }, []);
+
 
   return (
     <div>
@@ -35,8 +48,15 @@ export default function AlertsPanel({ alerts }) {
                 background: "#020617"
               }}
           >
+            {/* <strong>{alert.severity}</strong>
+            <p>{alert.message}</p> */}
             <strong>{alert.severity}</strong>
-            <p>{alert.message}</p>
+                  <p style={{ margin: "4px 0" }}>{alert.message}</p>
+
+               <div style={{ fontSize: "12px", opacity: 0.7 }}>
+                  Age: {getAlertAge(alert.timestamp, now)}
+               </div>
+
 
             {!alert.acknowledged && (
               <button
