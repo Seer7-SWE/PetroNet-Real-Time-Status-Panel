@@ -17,36 +17,36 @@ PetroNet is an interactive frontend dashboard that provides real-time insights i
 
 ## **Core Features**
 
-### 📍 Real-Time Geospatial Monitoring
+###  Real-Time Geospatial Monitoring
 
 * Displays all active oilfield sensors on a map.
 * Sensors are color-coded by status (Normal, High, Critical).
 * Location-aware popup panels for sensor details.
 
-### 📊 Pressure vs Temperature Correlation Chart
+###  Pressure vs Temperature Correlation Chart
 
 * Highlights the relationship between pressure and temperature readings.
 * Color-coded by sensor severity.
 * Helps detect anomalous sensor behavior.
 
-### 📋 Sensor Table with Confidence Indicator
+###  Sensor Table with Confidence Indicator
 
 * Shows all sensor data in a sortable table.
 * Includes calculated confidence metrics based on freshness and data validity.
 * Row heat shading indicates confidence levels: high, medium, low.
 
-### 🚨 Alerts Panel
+###  Alerts Panel
 
 * Lists current alerts with severity indicators.
 * Shows alert details and age.
 * Designed for real-time awareness.
-
-### 💓 System-Level Health Indicator
+  
+###  System-Level Health Indicator
 
 * KPI bar summarizing overall health of active sensors.
 * Provides a quick visual on system degradation.
 
-### 🧠 Real-Time Data Streaming
+###  Real-Time Data Streaming
 
 * Firebase Realtime Database powers two-way live updates.
 * UI automatically reflects changes as data streams in.
@@ -64,6 +64,60 @@ PetroNet is an interactive frontend dashboard that provides real-time insights i
 | Real-Time Updates | Firebase listeners         |
 
 ---
+
+## System Architecture
+
+The PetroNet platform follows a real-time digital oilfield architecture inspired by
+SCADA and production monitoring systems used in upstream oil & gas operations.
+```
+ ┌─────────────────────────────────────────────────────────────┐
+ │                     FIELD OPERATIONS LAYER                  │
+ └─────────────────────────────────────────────────────────────┘
+        │
+        │  (Temperature, Pressure, Status, Timestamp)
+        ▼
+ ┌─────────────────────────────────────────────────────────────┐
+ │                  SENSOR & EDGE SIMULATION                   │
+ │  (Cloudflare Worker / Local Simulator)                      │
+ │  - Generates realistic sensor telemetry                    │
+ │  - Injects anomalies & degradation                         │
+ │  - Mimics edge PLC / RTU behavior                           │
+ └─────────────────────────────────────────────────────────────┘
+        │
+        │  REST / Streaming Writes
+        ▼
+ ┌─────────────────────────────────────────────────────────────┐
+ │             REAL-TIME DATA INGESTION LAYER                  │
+ │              Firebase Realtime Database                    │
+ │                                                             │
+ │  ┌───────────────┐   ┌───────────────┐                     │
+ │  │   sensors/    │   │   alerts/     │                     │
+ │  │ - temp        │   │ - severity    │                     │
+ │  │ - pressure    │   │ - message     │                     │
+ │  │ - status      │   │ - timestamp   │                     │
+ │  │ - timestamp   │   │               │                     │
+ │  └───────────────┘   └───────────────┘                     │
+ │                                                             │
+ │  • Acts as SCADA-like event bus                              │
+ │  • Push-based streaming to UI                               │
+ └─────────────────────────────────────────────────────────────┘
+        │
+        │  Live Subscriptions (onValue)
+        ▼
+ ┌─────────────────────────────────────────────────────────────┐
+ │               APPLICATION / ANALYTICS LAYER                 │
+ │                   React + Vite SPA                          │
+ │                                                             │
+ │  ┌─────────────────────────────────────────────────────┐
+```
+
+
+The system is divided into:
+1. Field & Edge Layer
+2. Real-time Data Ingestion
+3. Analytics & Visualization
+4. Alerting & Operator Interface
+   
 
 ## **Getting Started**
 
@@ -218,17 +272,6 @@ No Firebase rules adjustments are required for development mode.
 
 ---
 
-## **Contributing**
-
-Contributions are welcome!
-Please open an issue first if you want to enhance features or fix a bug.
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
----
 
 ## **License**
 
