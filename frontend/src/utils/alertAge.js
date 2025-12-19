@@ -1,7 +1,7 @@
 export function getAlertAge(timestamp, now=Date.now()) {
   if (!timestamp) return "--";
 
-//   const now = Date.now();
+
 
   const ts =
     typeof timestamp === "number"
