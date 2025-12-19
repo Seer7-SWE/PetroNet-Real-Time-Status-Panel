@@ -5,7 +5,7 @@
 A real-time operational dashboard for oilfield sensor monitoring, built with React, Firebase, and Recharts. The platform ingests live data, visualizes key sensor metrics, and highlights anomalous conditions for field engineers and managers. It is designed with industrial dashboards in mind, offering map visuals, data tables, confidence indicators, and operational charting.
 
 Live Demo:
-🔗 [https://0b7499b3.petronet-real-time-status-panel.pages.dev/](https://0b7499b3.petronet-real-time-status-panel.pages.dev/)
+🔗 [https://petronet-real-time-status-panel.pages.dev/](https://petronet-real-time-status-panel.pages.dev/)
 
 ---
 
