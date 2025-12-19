@@ -161,7 +161,7 @@ npm run dev
 2. Enable **Realtime Database**.
 3. Structure your database like:
 
-json
+```json
 {
   "sensors": {
     "sensor-001": {
@@ -184,6 +184,7 @@ json
     }
   }
 }
+```
 
 
 No Firebase rules adjustments are required for development mode.
