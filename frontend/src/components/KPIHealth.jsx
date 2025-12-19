@@ -35,34 +35,3 @@ export default function KPIHealth({ sensors }) {
   );
 }
 
-// export default function KPIHealth({ value }) {
-//   const color =
-//     value > 80 ? "#22c55e" :
-//     value > 50 ? "#f59e0b" :
-//     "#ef4444";
-//     // const sensors = useFirebaseSensors();
-//     //   const sensorsArray = sensors ? Object.values(sensors) : [];
-
-//     //    const systemHealth = sensorsArray.length === 0
-//     //       ? 100
-//     //       : Math.round(
-//     //           (sensorsArray.filter(s => s.status === "NORMAL").length /
-//     //             sensorsArray.length) * 100
-//     //         );
-
-
-//   return (
-//     <div className="kpi-box">
-//       <div className="kpi-title">System Health</div>
-
-//       <div className="kpi-bar">
-//         <div
-//           className="kpi-fill"
-//           style={{ width: `${value}%`, background: color }}
-//         />
-//       </div>
-
-//       <div className="kpi-value">{value}%</div>
-//     </div>
-//   );
-// }
