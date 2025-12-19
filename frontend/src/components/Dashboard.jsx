@@ -5,76 +5,116 @@ import { database } from "../firebaseConfig";
 import MapView from "./MapView";
 import SensorTable from "./SensorTable";
 import AlertsPanel from "./AlertsPanel";
-// import RechartsPanel from "./RechartsPanel";
 import KPIHealth from "./KPIHealth";
 import TempPressureScatter from "./TempPressureScatter";
-
 
 export default function Dashboard() {
   const [sensors, setSensors] = useState({});
   const [alerts, setAlerts] = useState({});
 
   useEffect(() => {
-  const sensorsRef = ref(database, "sensors");
-  const alertsRef = ref(database, "alerts");
+    const sensorsRef = ref(database, "sensors");
+    const alertsRef = ref(database, "alerts");
 
-  const unsubSensors = onValue(sensorsRef, snap => {
-    setSensors(snap.val() || {});
-  });
+    const unsubSensors = onValue(sensorsRef, snap => {
+      setSensors(snap.val() || {});
+    });
 
-  const unsubAlerts = onValue(alertsRef, snap => {
-    setAlerts(snap.val() || {});
-  });
+    const unsubAlerts = onValue(alertsRef, snap => {
+      setAlerts(snap.val() || {});
+    });
 
     return () => {
       unsubSensors();
       unsubAlerts();
     };
   }, []);
-
-
+ 
   return (
-    <div className="scada-root">
-      {/* TOP STATUS BAR */}
-      <div className="scada-topbar">
-         <h2>PetroNet — Saudi Oilfield Operations</h2>
-         <span>Live Monitoring</span>
-         <div className="status">
-            <span className={Object.keys(alerts).length > 0 ? "critical" : "normal"}>
-                   ● SYSTEM {Object.keys(alerts).length > 0 ? "DEGRADED" : "NORMAL"}
-            </span>
-         </div>
-      </div>
+   <div className="scada-root">
+     {/* TOP STATUS BAR */}
+     <div className="scada-topbar">
+       <h2>PetroNet — Saudi Oilfield Operations</h2>
+       <span>Live Monitoring</span>
+       <div className="status">
+        <span className={Object.keys(alerts).length > 0 ? "critical" : "normal"}>
+          ● SYSTEM {Object.keys(alerts).length > 0 ? "DEGRADED" : "NORMAL"}
+        </span>
+       </div>
+     </div>
 
-      {/* MAIN GRID */}
-      <div className="scada-grid">
-         <div className="panel map">
-           <MapView sensors={sensors} />
-         </div>
+     {/* MAIN GRID */}
+     <div className="scada-grid">
+       <div className="panel map">
+         <MapView sensors={sensors} />
+       </div>
 
-        <div className="panel alerts">
-          <AlertsPanel alerts={alerts} />
-        </div>
+       <div className="panel alerts">
+         <AlertsPanel alerts={alerts} />
+       </div>
 
-        <div className="KPIHealth">
-            <KPIHealth sensors={sensors}/>
-        </div>
-        <div className="panel table">
-            <div className="panel-content">
-               <SensorTable sensors={sensors} />
-              <div/>
-        </div>
-        
-      </div>
-        {/* <div className="panel charts">           
-            <RechartsPanel sensors={sensors} />
-        </div> */}
-        
+       <div className="panel kpi">
+         <KPIHealth sensors={sensors} />
+       </div>
 
-    </div>
-       <div className="panel">
-          <TempPressureScatter sensors={sensors} />
+       <div className="panel table">
+         <div className="panel-content">
+          <SensorTable sensors={sensors} />
         </div>
+       </div>
+
+      {/* SCATTER GOES INSIDE GRID */}
+     </div>
+      <div className="panel">
+         <TempPressureScatter sensors={sensors} />
+       </div>
    </div>
-  );
+);
+
+
+
+  // return (
+  //   <div className="scada-root">
+
+  //     {/* TOP BAR */}
+  //     <div className="scada-topbar">
+  //       <h2>PetroNet — Saudi Oilfield Operations</h2>
+  //       <span>Live Monitoring</span>
+  //       <div className="status">
+  //         <span className={Object.keys(alerts).length > 0 ? "critical" : "normal"}>
+  //           ● SYSTEM {Object.keys(alerts).length > 0 ? "DEGRADED" : "NORMAL"}
+  //         </span>
+  //       </div>
+  //     </div>
+
+  //     {/* MAIN GRID */}
+  //     <div className="scada-grid">
+
+  //       <div className="panel map">
+  //         <MapView sensors={sensors} />
+  //       </div>
+
+  //       <div className="panel alerts">
+  //         <AlertsPanel alerts={alerts} />
+  //       </div>
+
+  //       <div className="panel kpi">
+  //         <KPIHealth sensors={sensors} />
+  //       </div>
+
+  //       <div className="panel table">
+  //         <div className="panel-content">
+  //           <SensorTable sensors={sensors} />
+  //         </div>
+  //       </div>
+
+  //     </div>
+
+  //     {/* CHART ROW (FULL WIDTH) */}
+  //     <div className="panel panel-charts">
+  //       <TempPressureScatter sensors={sensors} />
+  //     </div>
+
+  //   </div>
+  // );
 }

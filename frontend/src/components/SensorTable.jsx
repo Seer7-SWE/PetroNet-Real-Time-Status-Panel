@@ -18,7 +18,7 @@ export default function SensorTable({ sensors }) {
             <th>Field</th>
             <th>ID</th>
             <th>Temp (°C)</th>
-            <th>Pressure</th>
+            <th>Pressure (psi)</th>
             <th>Status</th>
             <th>Updated</th>
             <th>Confidence</th>
