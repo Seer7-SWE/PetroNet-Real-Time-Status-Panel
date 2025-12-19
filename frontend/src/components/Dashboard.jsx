@@ -70,51 +70,5 @@ export default function Dashboard() {
        </div>
    </div>
 );
-
-
-
-  // return (
-  //   <div className="scada-root">
-
-  //     {/* TOP BAR */}
-  //     <div className="scada-topbar">
-  //       <h2>PetroNet — Saudi Oilfield Operations</h2>
-  //       <span>Live Monitoring</span>
-  //       <div className="status">
-  //         <span className={Object.keys(alerts).length > 0 ? "critical" : "normal"}>
-  //           ● SYSTEM {Object.keys(alerts).length > 0 ? "DEGRADED" : "NORMAL"}
-  //         </span>
-  //       </div>
-  //     </div>
-
-  //     {/* MAIN GRID */}
-  //     <div className="scada-grid">
-
-  //       <div className="panel map">
-  //         <MapView sensors={sensors} />
-  //       </div>
-
-  //       <div className="panel alerts">
-  //         <AlertsPanel alerts={alerts} />
-  //       </div>
-
-  //       <div className="panel kpi">
-  //         <KPIHealth sensors={sensors} />
-  //       </div>
-
-  //       <div className="panel table">
-  //         <div className="panel-content">
-  //           <SensorTable sensors={sensors} />
-  //         </div>
-  //       </div>
-
-  //     </div>
-
-  //     {/* CHART ROW (FULL WIDTH) */}
-  //     <div className="panel panel-charts">
-  //       <TempPressureScatter sensors={sensors} />
-  //     </div>
-
-  //   </div>
-  // );
 }
+
