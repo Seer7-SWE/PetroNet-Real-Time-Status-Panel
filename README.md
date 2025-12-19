@@ -73,9 +73,9 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
  ┌─────────────────────────────────────────────────────────────┐
  │              FIELD & INSTRUMENTATION LAYER                  │
  └─────────────────────────────────────────────────────────────┘
-        │
-        │  (Temperature, Pressure, Status, Timestamp)
-        ▼
+                             │
+                             │  (Temperature, Pressure, Status, Timestamp)
+                             ▼
  ┌─────────────────────────────────────────────────────────────┐
  │                  SENSOR & EDGE SIMULATION                   │
  │  (Cloudflare Worker / Local Simulator)                      │
@@ -83,9 +83,9 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
  │  - Injects anomalies & degradation                          │
  │  - Mimics edge PLC / RTU behavior                           │
  └─────────────────────────────────────────────────────────────┘
-        │
-        │  REST / Streaming Writes
-        ▼
+                           │
+                           │  REST / Streaming Writes
+                           ▼
  ┌─────────────────────────────────────────────────────────────┐
  │             REAL-TIME DATA INGESTION LAYER                  │
  │              Firebase Realtime Database                     │
@@ -101,9 +101,9 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
  │  • Acts as SCADA-like event stream & state store            │
  │  • Push-based streaming to UI                               │
  └─────────────────────────────────────────────────────────────┘
-        │
-        │  Live Subscriptions (onValue)
-        ▼
+                           │
+                           │  Live Subscriptions (onValue)
+                           ▼
  ┌─────────────────────────────────────────────────────────────┐
  │               APPLICATION / ANALYTICS LAYER                 │
  │                   React + Vite SPA                          |
