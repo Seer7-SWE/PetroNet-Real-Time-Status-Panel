@@ -9,7 +9,7 @@ export default function AlertsPanel({ alerts }) {
     useEffect(() => {
       const interval = setInterval(() => {
       setNow(Date.now());
-      }, 60000); // update every 1 minute
+      }, 60000);
       return () => clearInterval(interval);
        }, []);
   
@@ -26,14 +26,7 @@ export default function AlertsPanel({ alerts }) {
     return <p style={{ opacity: 0.6 }}>No active alerts</p>;
   }
 
-  // const [now, setNow] = useState(Date.now());
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //   setNow(Date.now());
-  // }, 60000); // update every 1 minute
-
-  // return () => clearInterval(timer);
-  // }, []);
+  
 
 
   return (
@@ -57,8 +50,7 @@ export default function AlertsPanel({ alerts }) {
                 background: "#020617"
               }}
           >
-            {/* <strong>{alert.severity}</strong>
-            <p>{alert.message}</p> */}
+      
             <strong>{alert.severity}</strong>
                   <p style={{ margin: "4px 0" }}>{alert.message}</p>
 
