@@ -71,7 +71,7 @@ The PetroNet platform follows a real-time digital oilfield architecture inspired
 SCADA and production monitoring systems used in upstream oil & gas operations.
 ```
  ┌─────────────────────────────────────────────────────────────┐
- │                     FIELD OPERATIONS LAYER                  │
+ │              FIELD & INSTRUMENTATION LAYER                  │
  └─────────────────────────────────────────────────────────────┘
         │
         │  (Temperature, Pressure, Status, Timestamp)
@@ -79,8 +79,8 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
  ┌─────────────────────────────────────────────────────────────┐
  │                  SENSOR & EDGE SIMULATION                   │
  │  (Cloudflare Worker / Local Simulator)                      │
- │  - Generates realistic sensor telemetry                    │
- │  - Injects anomalies & degradation                         │
+ │  - Generates realistic sensor telemetry                     │
+ │  - Injects anomalies & degradation                          │
  │  - Mimics edge PLC / RTU behavior                           │
  └─────────────────────────────────────────────────────────────┘
         │
@@ -88,17 +88,17 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
         ▼
  ┌─────────────────────────────────────────────────────────────┐
  │             REAL-TIME DATA INGESTION LAYER                  │
- │              Firebase Realtime Database                    │
+ │              Firebase Realtime Database                     │
  │                                                             │
- │  ┌───────────────┐   ┌───────────────┐                     │
- │  │   sensors/    │   │   alerts/     │                     │
- │  │ - temp        │   │ - severity    │                     │
- │  │ - pressure    │   │ - message     │                     │
- │  │ - status      │   │ - timestamp   │                     │
- │  │ - timestamp   │   │               │                     │
- │  └───────────────┘   └───────────────┘                     │
+ │  ┌───────────────┐   ┌───────────────┐                      │
+ │  │   sensors/    │   │   alerts/     │                      │
+ │  │ - temp        │   │ - severity    │                      │
+ │  │ - pressure    │   │ - message     │                      │
+ │  │ - status      │   │ - timestamp   │                      │
+ │  │ - timestamp   │   │               │                      │
+ │  └───────────────┘   └───────────────┘                      │
  │                                                             │
- │  • Acts as SCADA-like event bus                              │
+ │  • Acts as SCADA-like event stream & state store            │
  │  • Push-based streaming to UI                               │
  └─────────────────────────────────────────────────────────────┘
         │
@@ -106,9 +106,13 @@ SCADA and production monitoring systems used in upstream oil & gas operations.
         ▼
  ┌─────────────────────────────────────────────────────────────┐
  │               APPLICATION / ANALYTICS LAYER                 │
- │                   React + Vite SPA                          │
+ │                   React + Vite SPA                          |
+ |             • Real-time dashboards & KPIs                   |
+ |             • Alarm acknowledgment workflow                 |
+ |            • Sensor confidence & data quality indicators    |
+ |            • Trend & correlation visualization              |       
  │                                                             │
- │  ┌─────────────────────────────────────────────────────┐
+ │   ┌─────────────────────────────────────────────────────┐
 ```
 
 
